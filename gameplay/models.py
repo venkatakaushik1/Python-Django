@@ -31,9 +31,9 @@ class GamesQuerySet(models.QuerySet):
 @python_2_unicode_compatible
 class Game(models.Model):
     first_player = models.ForeignKey(User,
-                   related_name="games_first_player")
+                   related_name="games_first_player",on_delete=models.CASCADE)
     second_player = models.ForeignKey(User,
-                    related_name="games_second_player")
+                    related_name="games_second_player",on_delete=models.CASCADE)
 
     start_time = models.DateTimeField(auto_now_add=True)
     last_active = models.DateTimeField(auto_now=True)
@@ -99,7 +99,7 @@ class Move(models.Model):
                         MaxValueValidator(BOARD_SIZE-1)]
         )
     comment = models.CharField(max_length=300, blank=True)
-    game = models.ForeignKey(Game, editable=False)
+    game = models.ForeignKey(Game, editable=False,on_delete=models.CASCADE)
     by_first_player = models.BooleanField(editable=False)
 
     def __eq__(self, other):
